@@ -15,6 +15,7 @@ import cucumber.api.junit.Cucumber;
 		features ="src//main//resources//features//CaseStudyLogin.feature",
 		glue= {"stepdefs"},
 		monochrome = true,
+		strict = true,
 		plugin = {"pretty", "com.cucumber.listener.ExtentCucumberFormatter:target/html/ExtentReport.html"} 
 		
 		)

@@ -2,6 +2,8 @@ package page;
 
 
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -12,9 +14,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 import base.TestBase;
+import cucumber.api.DataTable;
 
 
-public class Login extends TestBase{
+public class HotelBookingPage extends TestBase{
 	
 	@FindBy(name = "userName")WebElement Username;
 	@FindBy(name  = "userPwd")WebElement Password;
@@ -40,13 +43,13 @@ public class Login extends TestBase{
 	
 	
 	//Actions
-	public Login() {
+	public HotelBookingPage() {
 		PageFactory.initElements(driver, this);
 	}
 	
 	public void getPagetitle() {
 		String pageTitle = LoginpageTitle.getText();
-		System.out.println(pageTitle);
+		System.out.println("the tile of the page is " +pageTitle);
 		Assert.assertEquals("Hotel Booking Application" , pageTitle);		
 	}
 		
@@ -74,48 +77,31 @@ public class Login extends TestBase{
 	
 	public void Firstname(String Fname) {
 		Firstname.sendKeys(Fname);
-		if(Firstname == null) {
+		
+				
+	}
+	
+	public void alerthandling() {
 		paymentBtn.click();
 		Alert alert = driver.switchTo().alert();
 		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		alert.accept();
-		}
 	}
+	
 	public void Lastname(String Lname) {
 		Lastname.sendKeys(Lname);
-		if(Lastname == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
-		}
 	}
 	public void Email(String email) {
 		Email.sendKeys(email);
-		if(email == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
-		}
+		
 	}
 	public void PhoneNumber(String phone) {
 		PhoneNo.sendKeys(phone);
 		if(phone == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+			alerthandling();
 		}else if(phone.length() < 10) {
-			paymentBtn.click();
-			Alert alert = driver.switchTo().alert();
-			System.out.println("Alert message : "+ alert.getText());
-			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-			alert.accept();
+			alerthandling();
 			PhoneNo.clear();
 		}
 	}
@@ -124,90 +110,62 @@ public class Login extends TestBase{
 	public void SelectCity() {
 		Select selectedCity = new Select(City);
 		WebElement SelectedCity = selectedCity.getFirstSelectedOption();
-		System.out.println(SelectedCity.getText());
-		if(SelectedCity.getText() == "Select City") {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		//System.out.println(SelectedCity.getText());
+		if(SelectedCity.getText().equals("Select City")) {
+		alerthandling();
 		}
-		selectedCity.selectByValue("Hyderabad");
+		selectedCity.selectByValue(prop.getProperty("city"));
 	}
 	
 	public void SelectState() {
 		Select selectState = new Select(State);
 		WebElement SelectedState = selectState.getFirstSelectedOption();
-		System.out.println(SelectedState.getText());
-		if(SelectedState.getText() == "Select City") {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+	//	System.out.println(SelectedState.getText());
+		if(SelectedState.getText().equals("Select State")) {
+		alerthandling();
 		}
-		selectState.selectByValue("Telangana");
+		selectState.selectByValue(prop.getProperty("State"));
 	}
 	
 	public void NoOfGuests() {
 		Select selectPersons = new Select(NoOfPersons);
 		selectPersons.selectByIndex(5);
 		WebElement SelectedPersons = selectPersons.getFirstSelectedOption();
-		System.out.println(SelectedPersons.getText());
+		System.out.println("No.of guests staying is "+SelectedPersons.getText());
 	}
 	
 	public void CardOwner(String Cname) {
 		CardHolderName.sendKeys(Cname);
-		if(Cname == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		if(Cname.equals("")) {
+		alerthandling();
 		}
 	}
 	
 	public void CardNumber(String Cnumber) {
 		CardNumber.sendKeys(Cnumber);
-		if(Cnumber == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		if(Cnumber.equals("")) {
+		alerthandling();
 		}
 	}
 	
 	public void CVVNumber(String cvv) {
 		CVV.sendKeys(cvv);
-		if(cvv == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		if(cvv.equals("")) {
+		alerthandling();
 		}
 	}
 	
 	public void MonthOfExpiry(String month) {
 		ExpMnth.sendKeys(month);
-		if(month == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		if(month.equals("")) {
+		alerthandling();
 		}
 	}
 	
 	public void YearOfExpiry(String Year) {
 		ExpYear.sendKeys(Year);
-		if(Year == null) {
-		paymentBtn.click();
-		Alert alert = driver.switchTo().alert();
-		System.out.println("Alert message : "+ alert.getText());
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		alert.accept();
+		if(Year.equals("")) {
+		alerthandling();
 		}
 	}
 	
@@ -220,4 +178,25 @@ public class Login extends TestBase{
 		return check;
 	}
 	
+	public void succesfulBooking(DataTable userData) throws Throwable {
+		List<Map<String, String>> data = userData.asMaps(String.class, String.class);
+		Firstname.sendKeys(data.get(0).get("Firstname"));
+		Lastname.sendKeys(data.get(0).get("Lastname"));
+		Email.sendKeys(data.get(0).get("email"));
+		PhoneNo.sendKeys(data.get(0).get("phone"));
+		Address.sendKeys("Flat - 502, AR residency, Jublee hills");
+		Select selectedCity = new Select(City);
+		WebElement SelectedCity = selectedCity.getFirstSelectedOption();
+		selectedCity.selectByValue(data.get(0).get("City"));
+		Select selectState = new Select(State);
+		WebElement SelectedState = selectState.getFirstSelectedOption();
+		selectState.selectByValue(data.get(0).get("state"));
+		NoOfPersons.sendKeys(data.get(0).get("NoOfGuests"));
+		CardHolderName.sendKeys(data.get(0).get("CHname"));
+		CardNumber.sendKeys(data.get(0).get("CardNumber"));
+		CVV.sendKeys(data.get(0).get("CVV"));
+		ExpMnth.sendKeys(data.get(0).get("Expmnth"));
+		ExpYear.sendKeys(data.get(0).get("ExpYear"));		
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,13 +17,12 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import page.HotelBooking;
-import page.Login;
+import page.HotelBookingPage;
 
 public class BookingStepDef extends TestBase {
 	
-	Login loginpage1;
-	//HotelBooking hotelBooking;
+	HotelBookingPage loginpage1;
+	
 			
 	@Given("^User is on the Login page$")
 	public void user_is_on_the_Login_page() throws Throwable {
@@ -33,7 +33,7 @@ public class BookingStepDef extends TestBase {
 
 	@Given("^Title of the page$")
 	public void title_of_the_page() throws Throwable {
-			loginpage1= new Login();
+			loginpage1= new HotelBookingPage();
 			loginpage1.getPagetitle();		
 	}
 
@@ -67,23 +67,26 @@ public class BookingStepDef extends TestBase {
 	
 	@Then("^enter valid username and password$")
 	public void enter_valid_username_and_password() throws Throwable {
-		loginpage1 = new Login();
+		loginpage1 = new HotelBookingPage();
 	    loginpage1.Loggingin(prop.getProperty("username"), prop.getProperty("password") );
 	}
 	
 
 	@Then("^user login should be successful$")
 	public void user_login_should_be_successful() throws Throwable {
-		System.out.println(driver.getTitle());
+		System.out.println("The title of the page is "+ driver.getTitle());
 		Assert.assertEquals("Hotel Booking", driver.getTitle());
 	    
 	}
-	@Then("^Validate the error when first name is empty$")
-	public void validate_the_error_when_first_name_is_empty() throws Throwable {
-		loginpage1= new Login();
-		loginpage1.Firstname("");
+	
+	@Then("^Validate the error when first name is \"([^\"]*)\"$")
+	public void validate_the_error_when_first_name_is(String arg1) throws Throwable {
+		loginpage1= new HotelBookingPage();
+		loginpage1.Firstname(arg1);
+		loginpage1.alerthandling();
 	}
-
+	
+	
 	@Then("^Enter the firstname$")
 	public void enter_the_firstname() throws Throwable {
 		loginpage1.Firstname(prop.getProperty("Firstname"));
@@ -91,8 +94,8 @@ public class BookingStepDef extends TestBase {
 
 	@Then("^validate the error when Last name is empty$")
 	public void validate_the_error_when_Last_name_is_empty() throws Throwable {
-		loginpage1= new Login();
-		loginpage1.Lastname("");
+		loginpage1= new HotelBookingPage();
+		loginpage1.alerthandling();
 	}
 
 	@Then("^Enter the Last name$")
@@ -102,7 +105,7 @@ public class BookingStepDef extends TestBase {
 
 	@Then("^Validate the error when email is not entered$")
 	public void validate_the_error_when_email_is_not_entered() throws Throwable {
-	    loginpage1.Email("");
+		loginpage1.alerthandling();
 	    System.out.println(prop.getProperty("email"));
 	}
 
@@ -111,7 +114,8 @@ public class BookingStepDef extends TestBase {
 		loginpage1.Email(prop.getProperty("email"));
 		
 	}
-
+	
+	
 
 	@After//("@closeDriver")
 	public void teardown() {
@@ -211,6 +215,12 @@ public class BookingStepDef extends TestBase {
 	public void confirm_and_verify_if_the_booking_is_successful() throws Throwable {
 		loginpage1.confirmbooking();
 	    
+	}
+	
+	@Then("^Enter the details in the Hotel Booking page$")
+	public void enter_the_details_in_the_Hotel_Booking_page(DataTable ValidData) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	   loginpage1.succesfulBooking(ValidData);
 	}
 	
 }

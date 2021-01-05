@@ -12,12 +12,12 @@ When password is not sent
 Then Validate the error 
 
 
-Scenario: Logging in valid credentials  
+Scenario: Logging in valid credentials  and validating errors in Hotel Booking page
 Given User is on the Login page
 Then enter valid username and password
 Then user login should be successful
 #Scenario: Booking Hotel
-Then Validate the error when first name is empty
+Then Validate the error when first name is ""
 And Enter the firstname
 Then validate the error when Last name is empty
 And Enter the Last name
@@ -40,4 +40,14 @@ When Expiration month is not entered validate the error thrown
 Then Enter the Expiration month
 When Expiration year is not entered validate the error thrown
 Then Enter the Expiration year
+
+
+Scenario: Successful Hotel booking
+Given User is on the Login page
+Then enter valid username and password
+Then user login should be successful
+Then Enter the details in the Hotel Booking page
+|Firstname|Lastname|email|phone|City|state|NoOfGuests|CHname|CardNumber|CVV|Expmnth|ExpYear|
+|Test|Automation|abc@gmail.com|9345167896|Hyderabad|Telangana|3|test|4564456445644564|152|12|25|
 And confirm and verify if the booking is successful
+
