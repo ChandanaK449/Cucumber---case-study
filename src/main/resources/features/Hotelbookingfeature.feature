@@ -1,4 +1,4 @@
-Feature: Booking Hotel
+Feature: Booking Hotel room
 
 #Background: Login page should be launched
 
