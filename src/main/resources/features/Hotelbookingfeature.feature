@@ -1,4 +1,4 @@
-Feature: Testing the login page
+Feature: Booking Hotel
 
 #Background: Login page should be launched
 
