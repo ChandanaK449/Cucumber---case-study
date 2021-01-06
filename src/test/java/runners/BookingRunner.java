@@ -12,7 +12,7 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features ="src//main//resources//features//CaseStudyLogin.feature",
+		features ="src//main//resources//features//Hotelbookingfeature.feature",
 		glue= {"stepdefs"},
 		monochrome = true,
 		strict = true,
@@ -21,5 +21,11 @@ import cucumber.api.junit.Cucumber;
 		)
 
 public class BookingRunner {
+	
+	@AfterClass
+	public static void writeExtentReport(){
+		Reporter.loadXMLConfig(new File(System.getProperty("user.dir") +"//src//test//resources//extent-config.xml"));
+		
+	}
 	
 }
