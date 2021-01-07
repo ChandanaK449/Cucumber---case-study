@@ -2,12 +2,17 @@ package page;
 
 
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,6 +23,7 @@ import cucumber.api.DataTable;
 
 
 public class HotelBookingPage extends TestBase{
+	
 	
 	
 	@FindBy(name = "userName")WebElement Username;
@@ -97,13 +103,24 @@ public class HotelBookingPage extends TestBase{
 		Assert.assertEquals("Please fill the Last Name", alert.getText());
 		}
 	}
+	
 	public void Email(String email) {
 		Email.sendKeys(email);
+		Pattern pattern = Pattern.compile("[\\w]+[\\d\\w]*(@)[\\w]+[\\w\\d]*(\\.)[\\w]+");
+	    Matcher matcher = pattern.matcher(email);
+	   //  System.out.println(matcher);
 		if(email.equals("")) {
 			paymentBtn.click();
 			Alert alert = driver.switchTo().alert();
 			System.out.println("Alert message : "+ alert.getText());
 			Assert.assertEquals("Please fill the Email", alert.getText());
+			}else if(!matcher.matches()) {
+				paymentBtn.click();
+				Alert alert = driver.switchTo().alert();
+				System.out.println("Alert message : "+ alert.getText());
+				Assert.assertEquals("Please enter valid Email Id.", alert.getText());
+				driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+				
 			}
 		
 	}

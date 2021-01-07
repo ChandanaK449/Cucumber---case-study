@@ -25,6 +25,11 @@ public class BookingRunner {
 	@AfterClass
 	public static void writeExtentReport(){
 		Reporter.loadXMLConfig(new File(System.getProperty("user.dir") +"//src//test//resources//extent-config.xml"));
+		Reporter.setSystemInfo("UserName", System.getProperty("user.name"));
+		Reporter.setSystemInfo("Time Zone", System.getProperty("user.timezone"));
+		Reporter.setSystemInfo("Appliction Name", "Cucumber Case Study");
+		Reporter.setSystemInfo("Operating System", System.getProperty("os.name").toString());
+		Reporter.setSystemInfo("Environment", "Testing");
 		
 	}
 	
